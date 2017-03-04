@@ -24,8 +24,7 @@
 package sk.uniza.fri.hlavna2.diss.monte.carlo.core;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import sk.uniza.fri.hlavna2.diss.monte.carlo.core.exception.MonteCarloStoppedException;
 import sk.uniza.fri.hlavna2.diss.monte.carlo.core.utils.RandomStorage;
 
 /**
@@ -40,6 +39,8 @@ public class MonteCarloSolver {
 
     private final RandomStorage randomStorage;
 
+    private boolean isStopped;
+
     private MonteCarloSolver(MonteCarloCommand command, MonteCarloStatistics statistics) {
         this.statistics = statistics;
         this.randomStorage = new RandomStorage(new HashMap<>());
@@ -48,16 +49,34 @@ public class MonteCarloSolver {
     }
 
     public void solve(int iterations) {
+        if (isStopped) {
+            throw new MonteCarloStoppedException();
+        }
         for (int i = statistics.getIterationsRunned(); i < statistics.getIterationsRunned() + iterations; i++) {
-            command.simulate(randomStorage);
+            if (!isStopped) {
+                command.simulate(randomStorage);
+            }
+
         }
         statistics.setIterationsRunned(statistics.getIterationsRunned() + iterations);
+    }
+
+    public static MonteCarloSolver getSolver(MonteCarloCommand command, MonteCarloParameters parameters) {
+        return MonteCarloSolver.getSolver(command, parameters, new MonteCarloStatistics());
     }
 
     public static MonteCarloSolver getSolver(MonteCarloCommand command, MonteCarloParameters parameters, MonteCarloStatistics statistics) {
         MonteCarloSolver solver = new MonteCarloSolver(command, statistics);
         command.init(parameters, statistics, solver.randomStorage);
         return solver;
+    }
+
+    public void stop() {
+        isStopped = true;
+    }
+
+    public MonteCarloCommand getCommand() {
+        return command;
     }
 
 }
