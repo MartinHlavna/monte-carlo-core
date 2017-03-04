@@ -24,8 +24,9 @@
 package sk.uniza.fri.hlavna2.diss.monte.carlo.core;
 
 /**
+ * Parameters for the simulation. Should be specified by the implementation
  *
- * @author Martin Hlavňa <mato.hlavna@gmail.com>
+ * @author Martin Hlavňa {@literal <mato.hlavna@gmail.com>}
  */
 public interface MonteCarloParameters {
 

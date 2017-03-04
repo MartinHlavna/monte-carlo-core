@@ -24,28 +24,29 @@
 package sk.uniza.fri.hlavna2.diss.monte.carlo.core;
 
 /**
+ * Default statistics for the monte carlo simulation
  *
- * @author Martin Hlavňa <mato.hlavna@gmail.com>
+ * @author Martin Hlavňa {@literal <mato.hlavna@gmail.com>}
  */
 public class MonteCarloStatistics {
 
     private int iterationsRunned;
-    private int successCount;
 
+    /**
+     * Get number of runned iterations
+     *
+     * @return
+     */
     public int getIterationsRunned() {
         return iterationsRunned;
     }
 
+    /**
+     * Set number of runned iterations
+     *
+     * @param iterationsRunned
+     */
     public void setIterationsRunned(int iterationsRunned) {
         this.iterationsRunned = iterationsRunned;
     }
-
-    public int getSuccessCount() {
-        return successCount;
-    }
-
-    public void incrementSuccessCount() {
-        this.successCount++;
-    }
-
 }

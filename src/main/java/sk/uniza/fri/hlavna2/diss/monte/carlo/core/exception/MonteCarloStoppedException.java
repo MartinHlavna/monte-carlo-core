@@ -24,8 +24,9 @@
 package sk.uniza.fri.hlavna2.diss.monte.carlo.core.exception;
 
 /**
+ * Exception singalizing, that caller is trying to solve already stopped simulation
  *
- * @author Martin Hlavňa <mato.hlavna@gmail.com>
+ * @author Martin Hlavňa {@literal <mato.hlavna@gmail.com>}
  */
 public class MonteCarloStoppedException extends RuntimeException {
 

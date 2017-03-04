@@ -23,37 +23,54 @@
  */
 package sk.uniza.fri.hlavna2.diss.monte.carlo.core.utils;
 
+import java.util.Map;
 import java.util.Random;
+import sk.uniza.fri.hlavna2.diss.monte.carlo.core.exception.SimulationAlreadyInitializedException;
+import sk.uniza.fri.hlavna2.diss.monte.carlo.core.exception.SimulationNotFullyInitializedException;
 
 /**
- * Interface for storing number of Randoms
+ * Implementation of the RandomStorage
  *
  * @author Martin Hlavňa {@literal <mato.hlavna@gmail.com>}
  */
-public interface RandomStorage {
+public class RandomStorageImpl implements RandomStorage {
+
+    private final Map<String, Random> randomStorage;
+    private boolean initialized;
+
+    public RandomStorageImpl(Map<String, Random> randomStorage) {
+        this.randomStorage = randomStorage;
+    }
+
+    @Override
+    public void registerRandomGenerator(String key, Random random) {
+        if (initialized) {
+            throw new SimulationAlreadyInitializedException();
+        }
+        randomStorage.put(key, random);
+    }
+
+    @Override
+    public Random deregisterRandomGenerator(String key) {
+        if (initialized) {
+            throw new SimulationAlreadyInitializedException();
+        }
+        return randomStorage.remove(key);
+    }
+
+    @Override
+    public Random getRandom(String key) {
+        if (!initialized) {
+            throw new SimulationNotFullyInitializedException();
+        }
+        return randomStorage.get(key);
+    }
 
     /**
-     * Remove random generator from set
-     *
-     * @param key Key of the generator
-     * @return removed generator
+     * Set this instance as initialized
      */
-    Random deregisterRandomGenerator(String key);
-
-    /**
-     * Get Random with given key
-     *
-     * @param key rKey of the random
-     * @return Random with given key, null if not present
-     */
-    Random getRandom(String key);
-
-    /**
-     * Add new random generator
-     *
-     * @param key Key of the generator
-     * @param random Generator
-     */
-    void registerRandomGenerator(String key, Random random);
+    public void setInitialized() {
+        this.initialized = true;
+    }
 
 }

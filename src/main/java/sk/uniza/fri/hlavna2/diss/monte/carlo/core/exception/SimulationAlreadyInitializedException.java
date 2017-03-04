@@ -21,34 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package sk.uniza.fri.hlavna2.diss.monte.carlo.core;
-
-import sk.uniza.fri.hlavna2.diss.monte.carlo.core.utils.RandomStorage;
+package sk.uniza.fri.hlavna2.diss.monte.carlo.core.exception;
 
 /**
- * Command for monte carlo solver. Provides simulation setup and ability to simulate one replication
+ * Exception signalizing that configuration method has been called on already running simulation
  *
  * @author Martin Hlavňa {@literal <mato.hlavna@gmail.com>}
- * @param <T> result type
  */
-public interface MonteCarloCommand<T> {
+public class SimulationAlreadyInitializedException extends RuntimeException {
 
-    /**
-     * Simulate one replication. All Random generators registered in the init phase are suplied in the randoms parameter
-     *
-     * @param randoms
-     */
-    void simulate(RandomStorage randoms);
-
-    /**
-     * Initialize. Custom parameters, statistics are suplied
-     *
-     * @param parameters Parametrs of the simulation. Should be specified by by the implementation
-     * @param statistics Statistics for the simulation. May be extended to suit needs of the simulation
-     * @param storage storage place for random generators. All of the generators needs to be created in this phase.
-     * After this phsae random storage is closed to the changes
-     */
-    void init(MonteCarloParameters parameters, MonteCarloStatistics statistics, RandomStorage storage);
-
-    T getResult();
 }
