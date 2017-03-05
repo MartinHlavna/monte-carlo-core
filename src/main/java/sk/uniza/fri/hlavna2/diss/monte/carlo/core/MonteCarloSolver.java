@@ -65,6 +65,8 @@ public class MonteCarloSolver {
         for (i = statistics.getIterationsRunned(); i < statistics.getIterationsRunned() + iterations; i++) {
             if (!isStopped) {
                 command.simulate(randomStorage);
+            } else {
+                break;
             }
 
         }
